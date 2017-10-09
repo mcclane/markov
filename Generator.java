@@ -12,7 +12,10 @@ public class Generator {
 
     private HashMap<String, HashSet<String>> words;
     private ArrayList<String> text;
-
+    /**
+     * Constructor. 
+     * @param fileName name of file to be read in.
+     */
     public Generator(String fileName) {
         text = new ArrayList<String>();
         //read the fileName passed in
@@ -26,6 +29,10 @@ public class Generator {
             e.printStackTrace();
         }
     }
+    /**
+    * Generates a prefix -> suffix map using the file read in from constructor.
+    * @param prefixSize number of words in each prefix.
+    */
     public void generateMap(int prefixSize) {
         //generate prefix/suffix frequency map from text
         words = new HashMap<String, HashSet<String>>();
@@ -48,6 +55,12 @@ public class Generator {
             words.put(prefix, internal);
         }
     }
+    /**
+     * Generates text of given length starting with a given seed by creating a Markov chain.
+     * @param   seed    starting text for the markov chain.
+     * @param   length  number of words in the text generated.
+     * @return          Text generated from seed and with given length.
+     */
     public String generateText(String seed, int length) {
         String prefix = seed;
         String generatedText = prefix+" ";
@@ -69,6 +82,12 @@ public class Generator {
         }
         return generatedText;
     }
+    /**
+     * Returns String passed in without first word and with next word appended.
+     * @param   original    Original String that is to be shifted.
+     * @param   next        String to be appended to the end of the original String.
+     * @return              original string without first word and with next word appended.
+     */
     public String shift(String original, String next) {
         String[] splitted = original.split(" ");
         String shifted = "";
