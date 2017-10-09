@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class Markov {
     public static void main(String[] args) {
-        Generator gen = new Generator("sources/processedTweets.txt");
-        gen.generateMap(2);
+        Generator gen = new Generator("sources/source.txt");
+        gen.generateMap(5);
 
         Scanner input = new Scanner(System.in);
         while(true) {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Generator {
 
-    private HashMap<String, HashSet<String>> words;
+    private HashMap<String, ArrayList<String>> words;
     private ArrayList<String> text;
     /**
      * Constructor. 
@@ -35,7 +35,7 @@ public class Generator {
     */
     public void generateMap(int prefixSize) {
         //generate prefix/suffix frequency map from text
-        words = new HashMap<String, HashSet<String>>();
+        words = new HashMap<String, ArrayList<String>>();
         int len = text.size();
         for(int i = 0;i < text.size()-prefixSize-1;i++) {
             String prefix = "";
@@ -44,12 +44,12 @@ public class Generator {
             prefix = prefix.trim();
             String suffix = text.get(i+prefixSize).trim();
             //check if the suffix is already in the map
-            HashSet<String> internal;
+            ArrayList<String> internal;
             if(words.containsKey(prefix)) {
                 internal = words.get(prefix);
             }
             else {
-                internal = new HashSet<String>();
+                internal = new ArrayList<String>();
             }
             internal.add(suffix);
             words.put(prefix, internal);
@@ -66,18 +66,9 @@ public class Generator {
         String generatedText = prefix+" ";
         for(int i = 0;i < length;i++) {
             //find a random word from the internal suffix list
-            HashSet<String> internal = words.get(prefix);
-            String suffix = "";
-            int randIndex = (int)(Math.random()*internal.size());
-            int randCounter = 0;
-            for(String k : internal) {
-                if(randIndex == randCounter) {
-                    suffix = k;
-                    break;
-                }
-                randCounter++;
-            }
-            generatedText+= suffix+" ";
+            int randIndex = (int)(Math.random()*words.get(prefix).size());
+            String suffix = words.get(prefix).get(randIndex);
+            generatedText += suffix+" ";
             prefix = shift(prefix, suffix);
         }
         return generatedText;
